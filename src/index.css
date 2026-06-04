@@ -41,36 +41,47 @@
    DARK THEME
 ═══════════════════════════════════════════════ */
 [data-theme="dark"] {
-  --c-bg:           #0D0F17;
-  --c-surface:      #151824;
-  --c-surface-2:    #1C2032;
-  --c-surface-3:    #242840;
-  --c-border:       #2A2F45;
-  --c-border-2:     #1C2032;
-  --c-text-1:       #E8EAF6;
-  --c-text-2:       #8B93BA;
-  --c-text-3:       #555D80;
-  --c-accent:       #818CF8;
-  --c-accent-2:     #6BA3CC;
-  --c-accent-bg:    #1A1F3D;
-  --c-accent-border:#3730A3;
-  --c-sage:         #6DB88A;
-  --c-sage-2:       #4d9068;
-  --c-sage-bg:      #0B2018;
-  --c-danger:       #F87171;
-  --c-danger-bg:    #2D1212;
-  --c-danger-border:#7F1D1D;
-  --c-warning:      #FBBF24;
-  --c-warning-bg:   #2D200A;
-  --c-warning-border:#92400E;
-  --c-success:      #34D399;
-  --c-success-bg:   #0A2818;
-  --c-success-border:#065F46;
-  --c-nav-blur:     rgba(13,15,23,0.95);
-  --shadow-card:    0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-hover:   0 4px 24px -4px rgba(0,0,0,0.6);
-  --shadow-soft:    0 10px 30px rgba(0,0,0,0.5);
-  --shadow-glow:    0 0 20px rgba(129,140,248,0.2);
+  /* ── Backgrounds (dark enough for strong contrast) ── */
+  --c-bg:           #080A12;
+  --c-surface:      #0F1221;
+  --c-surface-2:    #181C30;
+  --c-surface-3:    #1E2438;
+  --c-border:       #2C3250;
+  --c-border-2:     #1E2438;
+
+  /* ── Text (HIGH contrast — clearly visible on dark backgrounds) ── */
+  --c-text-1:       #F1F3FF;  /* near-white — headings, titles, important text */
+  --c-text-2:       #C4CBEA;  /* light lavender — body text, labels, descriptions */
+  --c-text-3:       #8A93BC;  /* medium — placeholders, hints, timestamps */
+
+  /* ── Accent colors (brighter for dark bg) ── */
+  --c-accent:       #9BA8FF;
+  --c-accent-2:     #7BBDE0;
+  --c-accent-bg:    #16193D;
+  --c-accent-border:#4C4FBF;
+
+  /* ── Sage / green ── */
+  --c-sage:         #6FD89A;
+  --c-sage-2:       #4BAA72;
+  --c-sage-bg:      #0A2218;
+
+  /* ── Status colors (vibrant so they pop on dark) ── */
+  --c-danger:       #FF8080;
+  --c-danger-bg:    #2E1010;
+  --c-danger-border:#8B1A1A;
+  --c-warning:      #FFC940;
+  --c-warning-bg:   #2E2208;
+  --c-warning-border:#9A5C00;
+  --c-success:      #4ADEAA;
+  --c-success-bg:   #0A2C18;
+  --c-success-border:#1A6640;
+
+  /* ── Misc ── */
+  --c-nav-blur:     rgba(8,10,18,0.96);
+  --shadow-card:    0 1px 4px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-hover:   0 4px 28px -4px rgba(0,0,0,0.7);
+  --shadow-soft:    0 10px 32px rgba(0,0,0,0.6);
+  --shadow-glow:    0 0 24px rgba(155,168,255,0.2);
 }
 
 /* ═══════════════════════════════════════════════
@@ -281,15 +292,15 @@ select.input option { background: var(--c-surface); color: var(--c-text-1); }
 .subject-accountancy { background: var(--c-success-bg); color: #065F46; border: 1px solid #A7F3D0; }
 .subject-business    { background: #FFF8F1; color: #9C4221; border: 1px solid #FBD38D; }
 
-[data-theme="dark"] .subject-chemistry   { background: #2D1A0A; color: #FB923C; border-color: #7C2D12; }
-[data-theme="dark"] .subject-mathematics { background: #1E0D38; color: #C084FC; border-color: #581C87; }
-[data-theme="dark"] .subject-english     { background: #2D0A12; color: #FB7185; border-color: #9F1239; }
-[data-theme="dark"] .subject-hindi       { background: #2D1A0A; color: #FB923C; border-color: #7C2D12; }
-[data-theme="dark"] .subject-history     { background: #2D2208; color: #FCD34D; border-color: #92400E; }
-[data-theme="dark"] .subject-geography   { background: #0B2018; color: #4ADE80; border-color: #166534; }
-[data-theme="dark"] .subject-economics   { background: #2D0A38; color: #E879F9; border-color: #86198F; }
-[data-theme="dark"] .subject-computer    { background: #0C1E2D; color: #38BDF8; border-color: #0369A1; }
-[data-theme="dark"] .subject-biology     { background: #0B2018; color: #4ADE80; border-color: #166534; }
+[data-theme="dark"] .subject-chemistry   { background: #2D1A0A; color: #FDBA74; border-color: #92400E; }
+[data-theme="dark"] .subject-mathematics { background: #1E0D38; color: #D8B4FE; border-color: #7C3AED; }
+[data-theme="dark"] .subject-english     { background: #2D0A12; color: #FDA4AF; border-color: #BE123C; }
+[data-theme="dark"] .subject-hindi       { background: #2D1A0A; color: #FDBA74; border-color: #92400E; }
+[data-theme="dark"] .subject-history     { background: #2D2208; color: #FDE68A; border-color: #92400E; }
+[data-theme="dark"] .subject-geography   { background: #0A2218; color: #6FD89A; border-color: #166534; }
+[data-theme="dark"] .subject-economics   { background: #2D0A38; color: #F0ABFC; border-color: #9333EA; }
+[data-theme="dark"] .subject-computer    { background: #0C1E2D; color: #7DD3FC; border-color: #0369A1; }
+[data-theme="dark"] .subject-biology     { background: #0A2218; color: #6FD89A; border-color: #166534; }
 
 /* ═══════════════════════════════════════════════
    RESPONSIVE LAYOUT UTILITIES

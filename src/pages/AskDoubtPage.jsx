@@ -39,8 +39,7 @@ export default function AskDoubtPage() {
     setError('')
     if (!form.subject) return setError('Please select a subject')
     if (form.title.trim().length < 10) return setError('Title must be at least 10 characters')
-    if (form.description.trim().length < 20) return setError('Description must be at least 20 characters')
-    if (containsBadWord(form.title) || containsBadWord(form.description)) {
+    if (containsBadWord(form.title) || (form.description && containsBadWord(form.description))) {
       return setError('Your doubt contains inappropriate language. Please revise it.')
     }
 
@@ -128,14 +127,13 @@ export default function AskDoubtPage() {
             {/* Description */}
             <div>
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--c-text-1)', marginBottom: 6 }}>
-                Detailed Description *
-                <span style={{ fontWeight: 400, color: 'var(--c-text-3)', marginLeft: 8 }}>Explain what you tried and where you're stuck</span>
+                Detailed Description
+                <span style={{ fontWeight: 400, color: 'var(--c-text-3)', marginLeft: 8 }}>(optional) — explain what you tried and where you're stuck</span>
               </label>
               <textarea
-                required
                 value={form.description}
                 onChange={e => setForm({ ...form, description: e.target.value })}
-                placeholder="Describe your doubt in detail. Include what you already understand and what's confusing you..."
+                placeholder="(Optional) Describe your doubt in more detail. Include what you already understand, what's confusing you, or any attempt you made..."
                 className="input textarea"
                 style={{ minHeight: 130 }}
                 maxLength={2000}
