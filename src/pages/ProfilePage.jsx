@@ -44,13 +44,13 @@ export default function ProfilePage() {
   const subject = profile?.subject ? SUBJECT_MAP[profile.subject] : null
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F9FA', padding: '28px 20px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--c-bg)', padding: '28px 20px' }}>
       <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        <h1 style={{ margin: '0 0 24px', fontSize: '1.5rem', fontWeight: 700, color: '#1A1D23' }}>My Profile</h1>
+        <h1 style={{ margin: '0 0 24px', fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text-1)' }}>My Profile</h1>
 
         <div className="card" style={{ padding: 32, marginBottom: 20 }}>
           {/* Avatar & Name */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28, paddingBottom: 28, borderBottom: '1px solid #F3F4F6' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28, paddingBottom: 28, borderBottom: '1px solid var(--c-surface-2)' }}>
             <AvatarInitials name={profile?.name || 'U'} size={72} />
             <div style={{ flex: 1 }}>
               {editing ? (
@@ -65,8 +65,8 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: '#1A1D23' }}>{profile?.name}</h2>
-                  <button onClick={() => setEditing(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF' }}>
+                  <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: 'var(--c-text-1)' }}>{profile?.name}</h2>
+                  <button onClick={() => setEditing(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-text-3)' }}>
                     <Edit3 size={16} />
                   </button>
                 </div>
@@ -74,14 +74,14 @@ export default function ProfilePage() {
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 6, flexWrap: 'wrap' }}>
                 <span style={{
                   padding: '3px 10px', borderRadius: 999, fontSize: '0.75rem', fontWeight: 600,
-                  background: profile?.role === 'teacher' ? '#ECFDF5' : '#EEF2FF',
+                  background: profile?.role === 'teacher' ? 'var(--c-success-bg)' : 'var(--c-accent-bg)',
                   color: profile?.role === 'teacher' ? '#065F46' : '#4338CA',
                   textTransform: 'capitalize'
                 }}>
                   {profile?.role}
                 </span>
                 {subject && (
-                  <span style={{ padding: '3px 10px', borderRadius: 999, fontSize: '0.75rem', fontWeight: 500, background: '#F3F4F6', color: '#6B7280' }}>
+                  <span style={{ padding: '3px 10px', borderRadius: 999, fontSize: '0.75rem', fontWeight: 500, background: 'var(--c-surface-2)', color: 'var(--c-text-2)' }}>
                     {subject.emoji} {subject.label}
                   </span>
                 )}
@@ -92,22 +92,22 @@ export default function ProfilePage() {
           {/* Info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ width: 36, height: 36, borderRadius: 9, background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Mail size={16} color="#6B7CC4" />
+              <div style={{ width: 36, height: 36, borderRadius: 9, background: 'var(--c-accent-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Mail size={16} color="var(--c-accent)" />
               </div>
               <div>
-                <p style={{ margin: 0, fontSize: '0.75rem', color: '#9CA3AF' }}>Email</p>
-                <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 500, color: '#374151' }}>{user?.email}</p>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--c-text-3)' }}>Email</p>
+                <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 500, color: 'var(--c-text-1)' }}>{user?.email}</p>
               </div>
             </div>
             {subject && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 9, background: '#ECFDF5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <BookOpen size={16} color="#10B981" />
+                <div style={{ width: 36, height: 36, borderRadius: 9, background: 'var(--c-success-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <BookOpen size={16} color="var(--c-success)" />
                 </div>
                 <div>
-                  <p style={{ margin: 0, fontSize: '0.75rem', color: '#9CA3AF' }}>Subject</p>
-                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 500, color: '#374151' }}>{subject.emoji} {subject.label}</p>
+                  <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--c-text-3)' }}>Subject</p>
+                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 500, color: 'var(--c-text-1)' }}>{subject.emoji} {subject.label}</p>
                 </div>
               </div>
             )}
@@ -117,13 +117,13 @@ export default function ProfilePage() {
         {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
           {[
-            { label: 'Doubts Posted', value: stats.doubts, color: '#6B7CC4', bg: '#EEF2FF' },
-            { label: 'Answers Given', value: stats.answers, color: '#10B981', bg: '#ECFDF5' },
-            { label: 'Upvotes Earned', value: stats.upvotes, color: '#F59E0B', bg: '#FFFBEB' },
+            { label: 'Doubts Posted', value: stats.doubts, color: 'var(--c-accent)', bg: 'var(--c-accent-bg)' },
+            { label: 'Answers Given', value: stats.answers, color: 'var(--c-success)', bg: 'var(--c-success-bg)' },
+            { label: 'Upvotes Earned', value: stats.upvotes, color: 'var(--c-warning)', bg: 'var(--c-warning-bg)' },
           ].map((s, i) => (
             <div key={i} className="card" style={{ padding: '20px 16px', textAlign: 'center' }}>
               <p style={{ margin: '0 0 4px', fontSize: '2rem', fontWeight: 800, color: s.color }}>{s.value}</p>
-              <p style={{ margin: 0, fontSize: '0.75rem', color: '#9CA3AF' }}>{s.label}</p>
+              <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--c-text-3)' }}>{s.label}</p>
             </div>
           ))}
         </div>

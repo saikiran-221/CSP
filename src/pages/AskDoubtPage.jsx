@@ -71,34 +71,34 @@ export default function AskDoubtPage() {
   const charCount = form.description.length
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F9FA', padding: '28px 20px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--c-bg)', padding: '28px 20px' }}>
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <div style={{ marginBottom: 24 }}>
-          <h1 style={{ margin: '0 0 4px', fontSize: '1.5rem', fontWeight: 700, color: '#1A1D23' }}>Ask a Doubt</h1>
-          <p style={{ margin: 0, color: '#6B7280', fontSize: '0.9rem' }}>Be specific — good questions get better answers faster</p>
+          <h1 style={{ margin: '0 0 4px', fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text-1)' }}>Ask a Doubt</h1>
+          <p style={{ margin: 0, color: 'var(--c-text-2)', fontSize: '0.9rem' }}>Be specific — good questions get better answers faster</p>
         </div>
 
         <div className="card" style={{ padding: 32 }}>
           {error && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 8, padding: '10px 14px', marginBottom: 22 }}>
-              <AlertCircle size={16} color="#EF4444" />
-              <span style={{ fontSize: '0.85rem', color: '#DC2626' }}>{error}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--c-danger-bg)', border: '1px solid var(--c-danger-border)', borderRadius: 8, padding: '10px 14px', marginBottom: 22 }}>
+              <AlertCircle size={16} color="var(--c-danger)" />
+              <span style={{ fontSize: '0.85rem', color: 'var(--c-danger)' }}>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
             {/* Subject */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#374151', marginBottom: 10 }}>Subject *</label>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--c-text-1)', marginBottom: 10 }}>Subject *</label>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {SUBJECTS.map(s => (
                   <button key={s.id} type="button" onClick={() => setForm({ ...form, subject: s.id })} style={{
                     display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px',
                     borderRadius: 8, border: '1px solid', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 500,
                     transition: 'all 0.15s',
-                    borderColor: form.subject === s.id ? '#6B7CC4' : '#E5E7EB',
-                    background: form.subject === s.id ? '#EEF2FF' : 'white',
-                    color: form.subject === s.id ? '#6B7CC4' : '#6B7280',
+                    borderColor: form.subject === s.id ? 'var(--c-accent)' : 'var(--c-border)',
+                    background: form.subject === s.id ? 'var(--c-accent-bg)' : 'var(--c-surface)',
+                    color: form.subject === s.id ? 'var(--c-accent)' : 'var(--c-text-2)',
                     transform: form.subject === s.id ? 'scale(1.02)' : 'scale(1)',
                   }}>
                     {s.emoji} {s.label}
@@ -109,9 +109,9 @@ export default function AskDoubtPage() {
 
             {/* Title */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#374151', marginBottom: 6 }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--c-text-1)', marginBottom: 6 }}>
                 Doubt Title *
-                <span style={{ fontWeight: 400, color: '#9CA3AF', marginLeft: 8 }}>Be concise and specific</span>
+                <span style={{ fontWeight: 400, color: 'var(--c-text-3)', marginLeft: 8 }}>Be concise and specific</span>
               </label>
               <input
                 type="text"
@@ -122,14 +122,14 @@ export default function AskDoubtPage() {
                 className="input"
                 maxLength={200}
               />
-              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#9CA3AF', textAlign: 'right' }}>{form.title.length}/200</p>
+              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: 'var(--c-text-3)', textAlign: 'right' }}>{form.title.length}/200</p>
             </div>
 
             {/* Description */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#374151', marginBottom: 6 }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--c-text-1)', marginBottom: 6 }}>
                 Detailed Description *
-                <span style={{ fontWeight: 400, color: '#9CA3AF', marginLeft: 8 }}>Explain what you tried and where you're stuck</span>
+                <span style={{ fontWeight: 400, color: 'var(--c-text-3)', marginLeft: 8 }}>Explain what you tried and where you're stuck</span>
               </label>
               <textarea
                 required
@@ -140,20 +140,20 @@ export default function AskDoubtPage() {
                 style={{ minHeight: 130 }}
                 maxLength={2000}
               />
-              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: charCount > 1800 ? '#EF4444' : '#9CA3AF', textAlign: 'right' }}>{charCount}/2000</p>
+              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: charCount > 1800 ? 'var(--c-danger)' : 'var(--c-text-3)', textAlign: 'right' }}>{charCount}/2000</p>
             </div>
 
             {/* Image Upload */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#374151', marginBottom: 8 }}>
-                Attach Image <span style={{ fontWeight: 400, color: '#9CA3AF' }}>(optional — for diagrams/textbook screenshots)</span>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--c-text-1)', marginBottom: 8 }}>
+                Attach Image <span style={{ fontWeight: 400, color: 'var(--c-text-3)' }}>(optional — for diagrams/textbook screenshots)</span>
               </label>
               {imagePreview ? (
                 <div style={{ position: 'relative', display: 'inline-block' }}>
-                  <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: 220, borderRadius: 10, border: '1px solid #E5E7EB' }} />
+                  <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: 220, borderRadius: 10, border: '1px solid var(--c-border)' }} />
                   <button type="button" onClick={() => { setImageFile(null); setImagePreview(null) }} style={{
                     position: 'absolute', top: 8, right: 8, width: 28, height: 28,
-                    borderRadius: '50%', background: '#EF4444', border: 'none', cursor: 'pointer',
+                    borderRadius: '50%', background: 'var(--c-danger)', border: 'none', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <X size={14} color="white" />
@@ -162,36 +162,36 @@ export default function AskDoubtPage() {
               ) : (
                 <label htmlFor="image-upload" style={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  padding: '30px 20px', borderRadius: 10, border: '2px dashed #D1D5DB',
-                  cursor: 'pointer', background: '#F9FAFB', transition: 'all 0.2s',
+                  padding: '30px 20px', borderRadius: 10, border: '2px dashed var(--c-text-3)',
+                  cursor: 'pointer', background: 'var(--c-surface-2)', transition: 'all 0.2s',
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#6B7CC4'; e.currentTarget.style.background = '#EEF2FF'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#D1D5DB'; e.currentTarget.style.background = '#F9FAFB'; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--c-accent)'; e.currentTarget.style.background = 'var(--c-accent-bg)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--c-text-3)'; e.currentTarget.style.background = 'var(--c-surface-2)'; }}
                 >
-                  <ImagePlus size={28} color="#9CA3AF" style={{ marginBottom: 8 }} />
-                  <p style={{ margin: 0, fontSize: '0.875rem', color: '#6B7280', fontWeight: 500 }}>Click to upload image</p>
-                  <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#9CA3AF' }}>PNG, JPG, GIF up to 5MB</p>
+                  <ImagePlus size={28} color="var(--c-text-3)" style={{ marginBottom: 8 }} />
+                  <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--c-text-2)', fontWeight: 500 }}>Click to upload image</p>
+                  <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: 'var(--c-text-3)' }}>PNG, JPG, GIF up to 5MB</p>
                   <input id="image-upload" type="file" accept="image/*" onChange={handleImageSelect} style={{ display: 'none' }} />
                 </label>
               )}
             </div>
 
             {/* Anonymous Toggle */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', borderRadius: 10, background: form.is_anonymous ? '#F0FDF4' : '#F9FAFB', border: `1px solid ${form.is_anonymous ? '#BBF7D0' : '#E5E7EB'}`, transition: 'all 0.2s' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', borderRadius: 10, background: form.is_anonymous ? 'var(--c-sage-bg)' : 'var(--c-surface-2)', border: `1px solid ${form.is_anonymous ? '#BBF7D0' : 'var(--c-border)'}`, transition: 'all 0.2s' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                {form.is_anonymous ? <EyeOff size={20} color="#10B981" /> : <Eye size={20} color="#9CA3AF" />}
+                {form.is_anonymous ? <EyeOff size={20} color="var(--c-success)" /> : <Eye size={20} color="var(--c-text-3)" />}
                 <div>
-                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--c-text-1)' }}>
                     {form.is_anonymous ? 'Posting anonymously' : 'Posting as yourself'}
                   </p>
-                  <p style={{ margin: 0, fontSize: '0.78rem', color: '#9CA3AF' }}>
+                  <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--c-text-3)' }}>
                     {form.is_anonymous ? 'Your name will be hidden publicly. Teachers can identify you if needed.' : `Visible as ${profile?.name}`}
                   </p>
                 </div>
               </div>
               <button type="button" onClick={() => setForm({ ...form, is_anonymous: !form.is_anonymous })} style={{
                 width: 46, height: 26, borderRadius: 13, border: 'none', cursor: 'pointer',
-                background: form.is_anonymous ? '#10B981' : '#D1D5DB',
+                background: form.is_anonymous ? 'var(--c-success)' : 'var(--c-text-3)',
                 position: 'relative', transition: 'background 0.2s',
               }}>
                 <div style={{
@@ -208,7 +208,7 @@ export default function AskDoubtPage() {
               <button type="submit" disabled={loading} className="btn btn-primary" style={{ gap: 8, padding: '10px 24px' }}>
                 {loading ? (
                   <>
-                    <div style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                    <div className="spinner" style={{ width: 16, height: 16, borderWidth: 2, borderColor: 'rgba(255,255,255,0.4)', borderTopColor: 'white' }} />
                     Posting...
                   </>
                 ) : <><Send size={16} /> Post Doubt</>}

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { BookOpen, Mail, Lock, User, Eye, EyeOff, AlertCircle, GraduationCap, Presentation } from 'lucide-react'
+import { Mail, Lock, User, Eye, EyeOff, AlertCircle, GraduationCap, Presentation } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { SUBJECTS } from '../lib/constants'
+import { Logo } from '../components/Logo'
 import toast from 'react-hot-toast'
 
 export default function RegisterPage() {
@@ -20,11 +21,10 @@ export default function RegisterPage() {
     if (form.password !== form.confirmPassword) return setError('Passwords do not match')
     if (form.password.length < 6) return setError('Password must be at least 6 characters')
     if (role === 'teacher' && !form.subject) return setError('Please select your subject')
-
     setLoading(true)
     try {
       await signUp({ email: form.email, password: form.password, name: form.name, role, subject: form.subject || null })
-      toast.success('Account created successfully! Welcome to DoubtExchange 🎉')
+      toast.success('Account created! Welcome to DoubtXchange 🎉')
       navigate(role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard', { replace: true })
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.')
@@ -33,65 +33,69 @@ export default function RegisterPage() {
     }
   }
 
+  const label = (text) => (
+    <label style={{ display: 'block', fontSize: '0.84rem', fontWeight: 500, color: 'var(--c-text-2)', marginBottom: 6 }}>{text}</label>
+  )
+
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #F8F9FA 0%, #EEF2FF 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+    <div className="auth-wrapper">
       <div style={{ width: '100%', maxWidth: 460 }}>
-        <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <div style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, #6B7CC4, #7BAE8F)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-            <BookOpen size={26} color="white" />
+        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 14 }}>
+            <Logo size="lg" showText={false} />
           </div>
-          <h1 style={{ margin: '0 0 6px', fontSize: '1.5rem', fontWeight: 700, color: '#1A1D23' }}>Create your account</h1>
-          <p style={{ margin: 0, color: '#6B7280', fontSize: '0.9rem' }}>Join DoubtExchange for free</p>
+          <h1 style={{ margin: '0 0 5px', fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text-1)' }}>Create your account</h1>
+          <p style={{ margin: 0, color: 'var(--c-text-2)', fontSize: '0.9rem' }}>Join DoubtXchange for free</p>
         </div>
 
-        <div className="card" style={{ padding: 32 }}>
+        <div className="card auth-card" style={{ padding: 28 }}>
           {/* Role Toggle */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 24, background: '#F3F4F6', borderRadius: 10, padding: 4 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 22, background: 'var(--c-surface-2)', borderRadius: 10, padding: 4 }}>
             {[
               { value: 'student', label: 'Student', icon: GraduationCap },
               { value: 'teacher', label: 'Teacher', icon: Presentation },
-            ].map(({ value, label, icon: Icon }) => (
+            ].map(({ value, label: lbl, icon: Icon }) => (
               <button key={value} type="button" onClick={() => setRole(value)} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
                 padding: '9px 0', borderRadius: 7, border: 'none', cursor: 'pointer',
                 fontSize: '0.875rem', fontWeight: 600, transition: 'all 0.2s',
-                background: role === value ? 'white' : 'transparent',
-                color: role === value ? '#6B7CC4' : '#6B7280',
-                boxShadow: role === value ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
+                background: role === value ? 'var(--c-surface)' : 'transparent',
+                color: role === value ? 'var(--c-accent)' : 'var(--c-text-2)',
+                boxShadow: role === value ? 'var(--shadow-card)' : 'none',
               }}>
-                <Icon size={16} /> {label}
+                <Icon size={15} /> {lbl}
               </button>
             ))}
           </div>
 
           {error && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 8, padding: '10px 14px', marginBottom: 18 }}>
-              <AlertCircle size={16} color="#EF4444" />
-              <span style={{ fontSize: '0.85rem', color: '#DC2626' }}>{error}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--c-danger-bg)', border: '1px solid var(--c-danger-border)', borderRadius: 9, padding: '10px 14px', marginBottom: 18 }}>
+              <AlertCircle size={15} color="var(--c-danger)" />
+              <span style={{ fontSize: '0.84rem', color: 'var(--c-danger)' }}>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Full name</label>
+              {label('Full name')}
               <div style={{ position: 'relative' }}>
-                <User size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }} />
+                <User size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--c-text-3)' }} />
                 <input type="text" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your full name" className="input" style={{ paddingLeft: 38 }} />
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Email address</label>
+              {label('Email address')}
               <div style={{ position: 'relative' }}>
-                <Mail size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }} />
+                <Mail size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--c-text-3)' }} />
                 <input type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@school.edu" className="input" style={{ paddingLeft: 38 }} />
               </div>
             </div>
 
             {role === 'teacher' && (
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Your Subject</label>
-                <select value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="input" required={role === 'teacher'}>
+                {label('Your Subject')}
+                <select value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="input" required>
                   <option value="">Select your subject...</option>
                   {SUBJECTS.map(s => <option key={s.id} value={s.id}>{s.emoji} {s.label}</option>)}
                 </select>
@@ -99,41 +103,35 @@ export default function RegisterPage() {
             )}
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Password</label>
+              {label('Password')}
               <div style={{ position: 'relative' }}>
-                <Lock size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }} />
+                <Lock size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--c-text-3)' }} />
                 <input type={showPw ? 'text' : 'password'} required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} placeholder="Min. 6 characters" className="input" style={{ paddingLeft: 38, paddingRight: 40 }} />
-                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF' }}>
-                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-text-3)', display: 'flex' }}>
+                  {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Confirm password</label>
+              {label('Confirm password')}
               <div style={{ position: 'relative' }}>
-                <Lock size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }} />
+                <Lock size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--c-text-3)' }} />
                 <input type={showPw ? 'text' : 'password'} required value={form.confirmPassword} onChange={e => setForm({ ...form, confirmPassword: e.target.value })} placeholder="••••••••" className="input" style={{ paddingLeft: 38 }} />
               </div>
             </div>
 
-            <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: '100%', padding: '11px', fontSize: '0.95rem', marginTop: 6 }}>
-              {loading ? (
-                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <div style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                  Creating account...
-                </span>
-              ) : `Create ${role === 'teacher' ? 'Teacher' : 'Student'} Account`}
+            <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: '100%', padding: 11, fontSize: '0.95rem', marginTop: 4 }}>
+              {loading ? <><div className="spinner" /> Creating account...</> : `Create ${role === 'teacher' ? 'Teacher' : 'Student'} Account`}
             </button>
           </form>
 
-          <p style={{ textAlign: 'center', margin: '18px 0 0', fontSize: '0.875rem', color: '#6B7280' }}>
+          <p style={{ textAlign: 'center', margin: '16px 0 0', fontSize: '0.875rem', color: 'var(--c-text-2)' }}>
             Already have an account?{' '}
-            <Link to="/login" style={{ color: '#6B7CC4', fontWeight: 600, textDecoration: 'none' }}>Sign in</Link>
+            <Link to="/login" style={{ color: 'var(--c-accent)', fontWeight: 600, textDecoration: 'none' }}>Sign in</Link>
           </p>
         </div>
       </div>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   )
 }

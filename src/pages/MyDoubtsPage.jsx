@@ -40,12 +40,12 @@ export default function MyDoubtsPage() {
   ]
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F9FA', padding: '28px 20px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--c-bg)', padding: '28px 20px' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <h1 style={{ margin: '0 0 4px', fontSize: '1.5rem', fontWeight: 700, color: '#1A1D23' }}>My Doubts</h1>
-            <p style={{ margin: 0, color: '#6B7280', fontSize: '0.9rem' }}>Track all your posted questions</p>
+            <h1 style={{ margin: '0 0 4px', fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text-1)' }}>My Doubts</h1>
+            <p style={{ margin: 0, color: 'var(--c-text-2)', fontSize: '0.9rem' }}>Track all your posted questions</p>
           </div>
           <Link to="/student/ask" className="btn btn-primary" style={{ textDecoration: 'none', gap: 7 }}>
             <PlusCircle size={16} /> New Doubt
@@ -53,14 +53,14 @@ export default function MyDoubtsPage() {
         </div>
 
         {/* Filter tabs */}
-        <div style={{ display: 'flex', gap: 6, marginBottom: 20, background: 'white', borderRadius: 10, padding: 4, border: '1px solid #E5E7EB', overflowX: 'auto' }}>
+        <div style={{ display: 'flex', gap: 6, marginBottom: 20, background: 'var(--c-surface)', borderRadius: 10, padding: 4, border: '1px solid var(--c-border)', overflowX: 'auto' }}>
           {tabs.map(({ key, label, icon: Icon }) => (
             <button key={key} onClick={() => setFilter(key)} style={{
               display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px',
               borderRadius: 7, border: 'none', cursor: 'pointer', fontSize: '0.85rem',
               fontWeight: 500, whiteSpace: 'nowrap', transition: 'all 0.15s',
-              background: filter === key ? '#EEF2FF' : 'transparent',
-              color: filter === key ? '#6B7CC4' : '#6B7280',
+              background: filter === key ? 'var(--c-accent-bg)' : 'transparent',
+              color: filter === key ? 'var(--c-accent)' : 'var(--c-text-2)',
             }}>
               <Icon size={15} /> {label}
             </button>

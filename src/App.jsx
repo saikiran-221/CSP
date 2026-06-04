@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import Navbar from './components/Navbar'
 
@@ -75,14 +76,27 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-        <Toaster position="top-right" toastOptions={{
-          style: { fontFamily: 'Inter, sans-serif', fontSize: '0.875rem', borderRadius: '10px' },
-          success: { iconTheme: { primary: '#10B981', secondary: 'white' } },
-          error: { iconTheme: { primary: '#EF4444', secondary: 'white' } },
-        }} />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppRoutes />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '0.875rem',
+                borderRadius: '10px',
+                background: 'var(--c-surface)',
+                color: 'var(--c-text-1)',
+                border: '1px solid var(--c-border)',
+                boxShadow: 'var(--shadow-soft)',
+              },
+              success: { iconTheme: { primary: '#10B981', secondary: 'white' } },
+              error:   { iconTheme: { primary: '#EF4444', secondary: 'white' } },
+            }}
+          />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

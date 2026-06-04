@@ -71,21 +71,21 @@ export default function TeacherDashboard() {
   }, [profile?.subject])
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F9FA', padding: '28px 20px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--c-bg)', padding: '28px 20px' }}>
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
-          <h1 style={{ margin: '0 0 4px', fontSize: '1.5rem', fontWeight: 700, color: '#1A1D23' }}>
+          <h1 style={{ margin: '0 0 4px', fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text-1)' }}>
             Teacher Dashboard
           </h1>
-          <p style={{ margin: 0, color: '#6B7280', fontSize: '0.9rem' }}>
+          <p style={{ margin: 0, color: 'var(--c-text-2)', fontSize: '0.9rem' }}>
             {subject ? `Showing doubts for ${subject.emoji} ${subject.label}` : 'No subject assigned yet'}
           </p>
         </div>
 
         {/* Subject Banner */}
         {subject && (
-          <div style={{ background: 'linear-gradient(135deg, #7BAE8F, #4d9068)', borderRadius: 12, padding: '18px 24px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ background: 'linear-gradient(135deg, var(--c-sage), var(--c-sage-2))', borderRadius: 12, padding: '18px 24px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
             <span style={{ fontSize: '2.5rem' }}>{subject.emoji}</span>
             <div>
               <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'white' }}>
@@ -101,17 +101,17 @@ export default function TeacherDashboard() {
         {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 24 }}>
           {[
-            { label: 'Total Doubts', value: stats.total, icon: BookOpen, color: '#6B7CC4', bg: '#EEF2FF' },
-            { label: 'Needs Answer', value: stats.open, icon: Clock, color: '#F59E0B', bg: '#FFFBEB' },
-            { label: 'Answered', value: stats.answered, icon: CheckCircle, color: '#10B981', bg: '#ECFDF5' },
+            { label: 'Total Doubts', value: stats.total, icon: BookOpen, color: 'var(--c-accent)', bg: 'var(--c-accent-bg)' },
+            { label: 'Needs Answer', value: stats.open, icon: Clock, color: 'var(--c-warning)', bg: 'var(--c-warning-bg)' },
+            { label: 'Answered', value: stats.answered, icon: CheckCircle, color: 'var(--c-success)', bg: 'var(--c-success-bg)' },
           ].map((s, i) => (
             <div key={i} className="card" style={{ padding: '16px 18px', display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ width: 40, height: 40, borderRadius: 10, background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <s.icon size={18} color={s.color} />
               </div>
               <div>
-                <p style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#1A1D23' }}>{s.value}</p>
-                <p style={{ margin: 0, fontSize: '0.78rem', color: '#9CA3AF' }}>{s.label}</p>
+                <p style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: 'var(--c-text-1)' }}>{s.value}</p>
+                <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--c-text-3)' }}>{s.label}</p>
               </div>
             </div>
           ))}
@@ -125,9 +125,9 @@ export default function TeacherDashboard() {
               <button key={f} onClick={() => setFilter(f)} style={{
                 padding: '6px 16px', borderRadius: 8, border: '1px solid',
                 fontSize: '0.8rem', fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s',
-                borderColor: filter === f ? '#7BAE8F' : '#E5E7EB',
-                background: filter === f ? '#F0FDF4' : 'white',
-                color: filter === f ? '#15803D' : '#6B7280',
+                borderColor: filter === f ? 'var(--c-sage)' : 'var(--c-border)',
+                background: filter === f ? 'var(--c-sage-bg)' : 'var(--c-surface)',
+                color: filter === f ? '#15803D' : 'var(--c-text-2)',
               }}>
                 {f.charAt(0).toUpperCase() + f.slice(1)}
               </button>
@@ -136,8 +136,8 @@ export default function TeacherDashboard() {
         </div>
 
         {!profile?.subject ? (
-          <div style={{ textAlign: 'center', padding: '60px 20px', background: 'white', borderRadius: 12, border: '1px solid #E5E7EB' }}>
-            <p style={{ color: '#9CA3AF', fontSize: '0.9rem' }}>No subject assigned to your account. Please contact admin.</p>
+          <div style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--c-surface)', borderRadius: 12, border: '1px solid var(--c-border)' }}>
+            <p style={{ color: 'var(--c-text-3)', fontSize: '0.9rem' }}>No subject assigned to your account. Please contact admin.</p>
           </div>
         ) : loading ? <LoadingSkeleton count={4} /> : doubts.length === 0 ? (
           <EmptyState icon={BookOpen} title="No doubts yet" description={`No ${subject?.label} doubts ${filter !== 'all' ? `with status "${filter}"` : ''} found.`} />

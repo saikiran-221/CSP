@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
+import { Logo } from '../components/Logo'
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {
@@ -23,95 +24,67 @@ export default function LoginPage() {
     try {
       const { user } = await signIn(form)
       toast.success('Welcome back!')
-      const { data: profileData } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
-
+      const { data: profileData } = await supabase.from('profiles').select('role').eq('id', user.id).single()
       const role = profileData?.role || 'student'
       if (from && from !== '/login' && from !== '/register') {
         navigate(from, { replace: true })
-      } else if (role === 'teacher') {
-        navigate('/teacher/dashboard', { replace: true })
       } else {
-        navigate('/student/dashboard', { replace: true })
+        navigate(role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard', { replace: true })
       }
     } catch (err) {
-      setError(err.message || 'Invalid email or password. Please try again.')
+      setError(err.message || 'Invalid email or password.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #F8F9FA 0%, #EEF2FF 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+    <div className="auth-wrapper">
       <div style={{ width: '100%', maxWidth: 420 }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, #6B7CC4, #7BAE8F)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-            <BookOpen size={26} color="white" />
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 14 }}>
+            <Logo size="lg" showText={false} />
           </div>
-          <h1 style={{ margin: '0 0 6px', fontSize: '1.5rem', fontWeight: 700, color: '#1A1D23' }}>Welcome back</h1>
-          <p style={{ margin: 0, color: '#6B7280', fontSize: '0.9rem' }}>Sign in to DoubtExchange</p>
+          <h1 style={{ margin: '0 0 5px', fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text-1)' }}>Welcome back</h1>
+          <p style={{ margin: 0, color: 'var(--c-text-2)', fontSize: '0.9rem' }}>Sign in to DoubtXchange</p>
         </div>
 
-        <div className="card" style={{ padding: 32 }}>
+        <div className="card auth-card" style={{ padding: 30 }}>
           {error && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 8, padding: '10px 14px', marginBottom: 20 }}>
-              <AlertCircle size={16} color="#EF4444" />
-              <span style={{ fontSize: '0.85rem', color: '#DC2626' }}>{error}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--c-danger-bg)', border: '1px solid var(--c-danger-border)', borderRadius: 9, padding: '10px 14px', marginBottom: 18 }}>
+              <AlertCircle size={15} color="var(--c-danger)" />
+              <span style={{ fontSize: '0.84rem', color: 'var(--c-danger)' }}>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Email address</label>
+              <label style={{ display: 'block', fontSize: '0.84rem', fontWeight: 500, color: 'var(--c-text-2)', marginBottom: 6 }}>Email address</label>
               <div style={{ position: 'relative' }}>
-                <Mail size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }} />
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={e => setForm({ ...form, email: e.target.value })}
-                  placeholder="you@school.edu"
-                  className="input"
-                  style={{ paddingLeft: 38 }}
-                />
+                <Mail size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--c-text-3)' }} />
+                <input type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@school.edu" className="input" style={{ paddingLeft: 38 }} />
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, color: '#374151', marginBottom: 6 }}>Password</label>
+              <label style={{ display: 'block', fontSize: '0.84rem', fontWeight: 500, color: 'var(--c-text-2)', marginBottom: 6 }}>Password</label>
               <div style={{ position: 'relative' }}>
-                <Lock size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }} />
-                <input
-                  type={showPw ? 'text' : 'password'}
-                  required
-                  value={form.password}
-                  onChange={e => setForm({ ...form, password: e.target.value })}
-                  placeholder="••••••••"
-                  className="input"
-                  style={{ paddingLeft: 38, paddingRight: 40 }}
-                />
-                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF' }}>
-                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                <Lock size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--c-text-3)' }} />
+                <input type={showPw ? 'text' : 'password'} required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} placeholder="••••••••" className="input" style={{ paddingLeft: 38, paddingRight: 40 }} />
+                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-text-3)', display: 'flex' }}>
+                  {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
             </div>
 
-            <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: '100%', padding: '11px', fontSize: '0.95rem', marginTop: 4 }}>
-              {loading ? (
-                <span style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
-                  <div className="spinner" />
-                  Signing in...
-                </span>
-              ) : 'Sign In'}
+            <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: '100%', padding: 11, fontSize: '0.95rem', marginTop: 4 }}>
+              {loading ? <><div className="spinner" /> Signing in...</> : 'Sign In'}
             </button>
           </form>
 
-          <p style={{ textAlign: 'center', margin: '20px 0 0', fontSize: '0.875rem', color: '#6B7280' }}>
+          <p style={{ textAlign: 'center', margin: '18px 0 0', fontSize: '0.875rem', color: 'var(--c-text-2)' }}>
             Don't have an account?{' '}
-            <Link to="/register" style={{ color: '#6B7CC4', fontWeight: 600, textDecoration: 'none' }}>Create one</Link>
+            <Link to="/register" style={{ color: 'var(--c-accent)', fontWeight: 600, textDecoration: 'none' }}>Create one</Link>
           </p>
         </div>
       </div>
