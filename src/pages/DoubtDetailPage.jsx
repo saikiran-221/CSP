@@ -187,9 +187,9 @@ function AnswerComposer({ onSubmit, isTeacher }) {
 
       {/* Upload tip for video */}
       {activeTab === 'video' && !mediaPreview && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: '#F0F9FF', borderRadius: 8, marginBottom: 14, border: '1px solid #BAE6FD' }}>
-          <AlertCircle size={14} color="#0369A1" />
-          <span style={{ fontSize: '0.78rem', color: '#0369A1' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: 'var(--c-accent-bg)', borderRadius: 8, marginBottom: 14, border: '1px solid var(--c-accent-border)' }}>
+          <AlertCircle size={14} color="var(--c-accent)" />
+          <span style={{ fontSize: '0.78rem', color: 'var(--c-accent)' }}>
             Max video size: 50MB · Supported: MP4, MOV, WebM
           </span>
         </div>

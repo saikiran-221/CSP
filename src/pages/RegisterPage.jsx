@@ -50,22 +50,25 @@ export default function RegisterPage() {
 
         <div className="card auth-card" style={{ padding: 28 }}>
           {/* Role Toggle */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 22, background: 'var(--c-surface-2)', borderRadius: 10, padding: 4 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 22 }}>
             {[
               { value: 'student', label: 'Student', icon: GraduationCap },
               { value: 'teacher', label: 'Teacher', icon: Presentation },
-            ].map(({ value, label: lbl, icon: Icon }) => (
-              <button key={value} type="button" onClick={() => setRole(value)} style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
-                padding: '9px 0', borderRadius: 7, border: 'none', cursor: 'pointer',
-                fontSize: '0.875rem', fontWeight: 600, transition: 'all 0.2s',
-                background: role === value ? 'var(--c-surface)' : 'transparent',
-                color: role === value ? 'var(--c-accent)' : 'var(--c-text-2)',
-                boxShadow: role === value ? 'var(--shadow-card)' : 'none',
-              }}>
-                <Icon size={15} /> {lbl}
-              </button>
-            ))}
+            ].map(({ value, label: lbl, icon: Icon }) => {
+              const isActive = role === value
+              const activeClass = value === 'student' ? 'role-student-active' : 'role-teacher-active'
+              return (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setRole(value)}
+                  className={`role-card ${isActive ? activeClass : 'role-card-inactive'}`}
+                >
+                  <Icon size={17} />
+                  <span>{lbl}</span>
+                </button>
+              )
+            })}
           </div>
 
           {error && (

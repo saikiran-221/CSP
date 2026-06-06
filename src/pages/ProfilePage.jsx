@@ -75,7 +75,7 @@ export default function ProfilePage() {
                 <span style={{
                   padding: '3px 10px', borderRadius: 999, fontSize: '0.75rem', fontWeight: 600,
                   background: profile?.role === 'teacher' ? 'var(--c-success-bg)' : 'var(--c-accent-bg)',
-                  color: profile?.role === 'teacher' ? '#065F46' : '#4338CA',
+                  color: profile?.role === 'teacher' ? 'var(--c-success)' : 'var(--c-accent)',
                   textTransform: 'capitalize'
                 }}>
                   {profile?.role}

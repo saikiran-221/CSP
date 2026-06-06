@@ -22,14 +22,17 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     try {
-      const { user } = await signIn(form)
+      const data = await signIn(form)
+      const signedInUser = data?.user
       toast.success('Welcome back!')
-      const { data: profileData } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-      const role = profileData?.role || 'student'
-      if (from && from !== '/login' && from !== '/register') {
-        navigate(from, { replace: true })
-      } else {
-        navigate(role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard', { replace: true })
+      if (signedInUser) {
+        const { data: profileData } = await supabase.from('profiles').select('role').eq('id', signedInUser.id).single()
+        const role = profileData?.role || 'student'
+        if (from && from !== '/login' && from !== '/register') {
+          navigate(from, { replace: true })
+        } else {
+          navigate(role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard', { replace: true })
+        }
       }
     } catch (err) {
       setError(err.message || 'Invalid email or password.')

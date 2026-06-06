@@ -138,7 +138,7 @@ export default function Navbar() {
                             </span>
                           </div>
                           {[
-                            { label: 'Profile', icon: User, to: isStudent ? '/student/profile' : '/teacher/dashboard' },
+                            { label: 'Profile', icon: User, to: '/profile' },
                           ].map(item => (
                             <Link key={item.label} to={item.to} onClick={() => setDropdownOpen(false)} style={{
                               display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px',

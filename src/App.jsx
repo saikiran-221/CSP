@@ -54,13 +54,13 @@ function AppRoutes() {
 
         {/* Shared */}
         <Route path="/doubt/:id" element={<ProtectedRoute><DoubtDetailPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
         {/* Student routes */}
         <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={['student']}><StudentDashboard /></ProtectedRoute>} />
         <Route path="/student/ask" element={<ProtectedRoute allowedRoles={['student']}><AskDoubtPage /></ProtectedRoute>} />
         <Route path="/student/my-doubts" element={<ProtectedRoute allowedRoles={['student']}><MyDoubtsPage /></ProtectedRoute>} />
         <Route path="/student/notifications" element={<ProtectedRoute allowedRoles={['student']}><NotificationsPage /></ProtectedRoute>} />
-        <Route path="/student/profile" element={<ProtectedRoute allowedRoles={['student']}><ProfilePage /></ProtectedRoute>} />
 
         {/* Teacher routes */}
         <Route path="/teacher/dashboard" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherDashboard /></ProtectedRoute>} />

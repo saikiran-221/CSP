@@ -62,7 +62,7 @@ export default function ModerationPanel() {
         {reports.length > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--c-warning-bg)', border: '1px solid var(--c-warning-border)', borderRadius: 10, padding: '10px 16px', marginBottom: 20 }}>
             <AlertTriangle size={16} color="var(--c-warning)" />
-            <span style={{ fontSize: '0.875rem', color: '#92400E', fontWeight: 500 }}>
+            <span style={{ fontSize: '0.875rem', color: 'var(--c-warning)', fontWeight: 500 }}>
               {reports.length} pending {reports.length === 1 ? 'report' : 'reports'} need review
             </span>
           </div>
@@ -81,7 +81,7 @@ export default function ModerationPanel() {
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 14, flexWrap: 'wrap' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <Flag size={16} color="var(--c-warning)" />
-                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#92400E', background: 'var(--c-warning-bg)', padding: '2px 10px', borderRadius: 999 }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--c-warning)', background: 'var(--c-warning-bg)', padding: '2px 10px', borderRadius: 999 }}>
                       Reported Doubt
                     </span>
                     <span style={{ fontSize: '0.75rem', color: 'var(--c-text-3)' }}>{timeAgo(r.created_at)}</span>
@@ -100,8 +100,8 @@ export default function ModerationPanel() {
                   </div>
                 )}
 
-                <div style={{ background: '#FEF3C7', borderRadius: 8, padding: '10px 14px', marginBottom: 16 }}>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: '#92400E' }}>
+                <div style={{ background: 'var(--c-warning-bg)', borderRadius: 8, padding: '10px 14px', marginBottom: 16, border: '1px solid var(--c-warning-border)' }}>
+                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--c-warning)' }}>
                     <strong>Report reason:</strong> {r.reason}
                   </p>
                 </div>

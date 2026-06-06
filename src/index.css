@@ -41,47 +41,47 @@
    DARK THEME
 ═══════════════════════════════════════════════ */
 [data-theme="dark"] {
-  /* ── Backgrounds (dark enough for strong contrast) ── */
-  --c-bg:           #080A12;
-  --c-surface:      #0F1221;
-  --c-surface-2:    #181C30;
-  --c-surface-3:    #1E2438;
-  --c-border:       #2C3250;
-  --c-border-2:     #1E2438;
+  /* ── Backgrounds ── */
+  --c-bg:           #070810;
+  --c-surface:      #0C0E1A;
+  --c-surface-2:    #121526;
+  --c-surface-3:    #181C30;
+  --c-border:       #232744;
+  --c-border-2:     #181C30;
 
-  /* ── Text (HIGH contrast — clearly visible on dark backgrounds) ── */
-  --c-text-1:       #F1F3FF;  /* near-white — headings, titles, important text */
-  --c-text-2:       #C4CBEA;  /* light lavender — body text, labels, descriptions */
-  --c-text-3:       #8A93BC;  /* medium — placeholders, hints, timestamps */
+  /* ── Text: WHITE & LIGHT GREY (maximum readability) ── */
+  --c-text-1:       #FFFFFF;   /* pure white  — headings, names, key info     */
+  --c-text-2:       #D8DCF0;   /* light grey  — body text, labels, answers    */
+  --c-text-3:       #9099C4;   /* medium grey — timestamps, hints, placeholders*/
 
-  /* ── Accent colors (brighter for dark bg) ── */
-  --c-accent:       #9BA8FF;
-  --c-accent-2:     #7BBDE0;
-  --c-accent-bg:    #16193D;
-  --c-accent-border:#4C4FBF;
+  /* ── Accent: Bright & vibrant on dark ── */
+  --c-accent:       #8A9BFF;
+  --c-accent-2:     #72BFEF;
+  --c-accent-bg:    #12163A;
+  --c-accent-border:#3D42AA;
 
   /* ── Sage / green ── */
-  --c-sage:         #6FD89A;
-  --c-sage-2:       #4BAA72;
-  --c-sage-bg:      #0A2218;
+  --c-sage:         #5ED68C;
+  --c-sage-2:       #3DB86E;
+  --c-sage-bg:      #091D12;
 
-  /* ── Status colors (vibrant so they pop on dark) ── */
-  --c-danger:       #FF8080;
-  --c-danger-bg:    #2E1010;
-  --c-danger-border:#8B1A1A;
-  --c-warning:      #FFC940;
-  --c-warning-bg:   #2E2208;
-  --c-warning-border:#9A5C00;
-  --c-success:      #4ADEAA;
-  --c-success-bg:   #0A2C18;
-  --c-success-border:#1A6640;
+  /* ── Status (bright, pops on dark backgrounds) ── */
+  --c-danger:       #FF7070;
+  --c-danger-bg:    #230D0D;
+  --c-danger-border:#7A1515;
+  --c-warning:      #FFD060;
+  --c-warning-bg:   #261B04;
+  --c-warning-border:#8A5C00;
+  --c-success:      #40E8A0;
+  --c-success-bg:   #082414;
+  --c-success-border:#155830;
 
-  /* ── Misc ── */
-  --c-nav-blur:     rgba(8,10,18,0.96);
-  --shadow-card:    0 1px 4px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
-  --shadow-hover:   0 4px 28px -4px rgba(0,0,0,0.7);
-  --shadow-soft:    0 10px 32px rgba(0,0,0,0.6);
-  --shadow-glow:    0 0 24px rgba(155,168,255,0.2);
+  /* ── Nav & Shadows ── */
+  --c-nav-blur:     rgba(7,8,16,0.97);
+  --shadow-card:    0 2px 8px rgba(0,0,0,0.6);
+  --shadow-hover:   0 6px 30px rgba(0,0,0,0.75);
+  --shadow-soft:    0 12px 40px rgba(0,0,0,0.7);
+  --shadow-glow:    0 0 28px rgba(138,155,255,0.25);
 }
 
 /* ═══════════════════════════════════════════════
@@ -427,5 +427,107 @@ select.input option { background: var(--c-surface); color: var(--c-text-1); }
 /* ═══════════════════════════════════════════════
    PAGE BACKGROUNDS (theme-aware)
 ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   PAGE BACKGROUNDS (theme-aware)
+═══════════════════════════════════════════════ */
 .bg-page    { background: var(--c-bg); min-height: 100vh; }
 .bg-surface { background: var(--c-surface); }
+
+/* ═══════════════════════════════════════════════
+   ROLE SELECTION CARDS (Register page)
+   Shiny glowing gradient on dark, clean on light
+═══════════════════════════════════════════════ */
+.role-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 0;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Inactive state (light) */
+.role-card-inactive {
+  background: transparent;
+  color: var(--c-text-2);
+  border-color: transparent;
+}
+.role-card-inactive:hover {
+  background: var(--c-surface-3);
+  color: var(--c-text-1);
+}
+
+/* ── STUDENT SELECTED ── */
+.role-student-active {
+  background: linear-gradient(135deg, #5B6AD4, #7B8CF7);
+  border-color: #A5B4FC;
+  color: #ffffff;
+  box-shadow: 0 3px 14px rgba(91, 106, 212, 0.35);
+}
+
+/* ── TEACHER SELECTED ── */
+.role-teacher-active {
+  background: linear-gradient(135deg, #2E9E68, #40C87C);
+  border-color: #86EFAC;
+  color: #ffffff;
+  box-shadow: 0 3px 14px rgba(46, 158, 104, 0.35);
+}
+
+/* ── DARK THEME: Student card — electric indigo glow ── */
+[data-theme="dark"] .role-student-active {
+  background: linear-gradient(135deg, #3730A3, #5B6AD4, #818CF8);
+  border-color: #A5B4FC;
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(165,180,252,0.3),
+    0 4px 24px rgba(99,102,241,0.55),
+    0 0 40px rgba(129,140,248,0.25);
+}
+/* Shine overlay */
+[data-theme="dark"] .role-student-active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── DARK THEME: Teacher card — emerald-green neon glow ── */
+[data-theme="dark"] .role-teacher-active {
+  background: linear-gradient(135deg, #065F46, #2E9E68, #4ADEAA);
+  border-color: #6EE7B7;
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(110,231,183,0.3),
+    0 4px 24px rgba(16,185,129,0.55),
+    0 0 40px rgba(74,222,160,0.25);
+}
+[data-theme="dark"] .role-teacher-active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── DARK THEME: Inactive cards get a subtle border ── */
+[data-theme="dark"] .role-card-inactive {
+  color: var(--c-text-2);
+  border-color: var(--c-border);
+}
+[data-theme="dark"] .role-card-inactive:hover {
+  background: var(--c-surface-2);
+  border-color: var(--c-text-3);
+  color: var(--c-text-1);
+}
+
