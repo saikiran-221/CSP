@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { User, Edit3, Save, X, Mail, BookOpen } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { Edit3, Save, X, Mail, BookOpen } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { AvatarInitials } from '../components/UI'
@@ -9,23 +9,24 @@ import toast from 'react-hot-toast'
 export default function ProfilePage() {
   const { user, profile, refreshProfile } = useAuth()
   const [editing, setEditing] = useState(false)
-  const [name, setName] = useState(profile?.name || '')
+  const [name, setName] = useState('')
   const [saving, setSaving] = useState(false)
   const [stats, setStats] = useState({ doubts: 0, answers: 0, upvotes: 0 })
 
-  useEffect(() => {
-    setName(profile?.name || '')
-    if (user) loadStats()
-  }, [profile, user])
-
-  async function loadStats() {
+  const loadStats = useCallback(async () => {
+    if (!user) return
     const [d, a] = await Promise.all([
       supabase.from('doubts').select('id', { count: 'exact' }).eq('user_id', user.id),
       supabase.from('answers').select('upvotes').eq('user_id', user.id),
     ])
     const upvotesTotal = (a.data || []).reduce((sum, row) => sum + (row.upvotes || 0), 0)
     setStats({ doubts: d.count || 0, answers: (a.data || []).length, upvotes: upvotesTotal })
-  }
+  }, [user])
+
+  useEffect(() => {
+    const t = setTimeout(loadStats, 0)
+    return () => clearTimeout(t)
+  }, [loadStats])
 
   async function saveProfile() {
     if (!name.trim()) return toast.error('Name cannot be empty')
@@ -66,7 +67,7 @@ export default function ProfilePage() {
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: 'var(--c-text-1)' }}>{profile?.name}</h2>
-                  <button onClick={() => setEditing(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-text-3)' }}>
+                  <button onClick={() => { setName(profile?.name || ''); setEditing(true) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-text-3)' }}>
                     <Edit3 size={16} />
                   </button>
                 </div>

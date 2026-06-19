@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { LayoutDashboard, Clock, CheckCircle, BookOpen, Filter } from 'lucide-react'
+import { Clock, CheckCircle, BookOpen } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { DoubtCard, LoadingSkeleton, EmptyState, SearchBar } from '../components/UI'
@@ -13,6 +13,7 @@ export default function TeacherDashboard() {
   const [filter, setFilter] = useState('all')
   const [stats, setStats] = useState({ total: 0, open: 0, answered: 0 })
   const subject = SUBJECT_MAP[profile?.subject]
+  const subjectKey = profile?.subject
 
   const fetchDoubts = useCallback(async () => {
     setLoading(true)
@@ -22,7 +23,7 @@ export default function TeacherDashboard() {
       .order('created_at', { ascending: false })
       .limit(40)
 
-    if (profile?.subject) query = query.eq('subject', profile.subject)
+    if (subjectKey) query = query.eq('subject', subjectKey)
     if (filter === 'open') query = query.eq('status', 'open')
     if (filter === 'answered') query = query.in('status', ['answered', 'resolved'])
     if (search.trim()) query = query.ilike('title', `%${search.trim()}%`)
@@ -51,9 +52,12 @@ export default function TeacherDashboard() {
     }))
     setDoubts(processed)
     setLoading(false)
-  }, [profile?.subject, filter, search])
+  }, [subjectKey, filter, search])
 
-  useEffect(() => { fetchDoubts() }, [fetchDoubts])
+  useEffect(() => {
+    const t = setTimeout(fetchDoubts, 0)
+    return () => clearTimeout(t)
+  }, [fetchDoubts])
 
   useEffect(() => {
     async function loadStats() {

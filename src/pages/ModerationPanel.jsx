@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Shield, Flag, Trash2, Check, X, AlertTriangle, RefreshCw } from 'lucide-react'
+import { Shield, Flag, Trash2, X, AlertTriangle, RefreshCw } from 'lucide-react'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../contexts/AuthContext'
 import { timeAgo } from '../lib/constants'
 import { EmptyState } from '../components/UI'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 export default function ModerationPanel() {
-  const { profile } = useAuth()
   const [reports, setReports] = useState([])
   const [loading, setLoading] = useState(true)
   const [processing, setProcessing] = useState(null)
@@ -17,7 +15,7 @@ export default function ModerationPanel() {
 
   async function fetchReports() {
     setLoading(true)
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('reports')
       .select('*, doubts:target_id(*)')
       .eq('status', 'pending')

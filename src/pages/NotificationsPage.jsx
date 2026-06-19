@@ -12,19 +12,19 @@ export default function NotificationsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!user) return
+    async function fetchNotifications() {
+      const { data } = await supabase
+        .from('notifications')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(50)
+      setNotifications(data || [])
+      setLoading(false)
+    }
     fetchNotifications()
-  }, [])
-
-  async function fetchNotifications() {
-    const { data } = await supabase
-      .from('notifications')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(50)
-    setNotifications(data || [])
-    setLoading(false)
-  }
+  }, [user])
 
   async function markAllRead() {
     await supabase.from('notifications').update({ is_read: true }).eq('user_id', user.id)

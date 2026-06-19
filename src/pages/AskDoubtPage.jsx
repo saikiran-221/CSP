@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Upload, X, EyeOff, Eye, AlertCircle, Send, ImagePlus } from 'lucide-react'
+import { X, EyeOff, Eye, AlertCircle, Send, ImagePlus } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { SUBJECTS, containsBadWord } from '../lib/constants'
-import { SubjectBadge } from '../components/UI'
 import toast from 'react-hot-toast'
 
 export default function AskDoubtPage() {

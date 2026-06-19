@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { PlusCircle, TrendingUp, Clock, CheckCircle, BookOpen, Filter, X } from 'lucide-react'
+import { PlusCircle, Clock, CheckCircle, BookOpen, Filter, X } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { SUBJECTS } from '../lib/constants'
@@ -50,7 +50,7 @@ export default function StudentDashboard() {
         answer_count: answerCounts[d.id]?.count || 0,
         has_best_answer: answerCounts[d.id]?.hasBest || false,
       })))
-    } catch (err) {
+    } catch {
       toast.error('Failed to load doubts')
     } finally {
       setLoading(false)
@@ -60,7 +60,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const t = setTimeout(fetchDoubts, search ? 400 : 0)
     return () => clearTimeout(t)
-  }, [fetchDoubts])
+  }, [fetchDoubts, search])
 
   useEffect(() => {
     async function loadStats() {
@@ -131,6 +131,31 @@ export default function StudentDashboard() {
                   <Filter size={16} />
                 </button>
               </div>
+
+              {/* Mobile Subject Filter Drawer/Panel */}
+              {showMobileFilter && (
+                <div className="card-flat show-mobile" style={{ display: 'none', flexDirection: 'column', gap: 6, padding: 12, marginTop: 4 }}>
+                  <h3 style={{ margin: '0 0 8px', fontSize: '0.8rem', fontWeight: 600, color: 'var(--c-text-1)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <Filter size={12} color="var(--c-text-3)" /> Filter by Subject
+                  </h3>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                    <button onClick={() => { setSelectedSubject(''); setShowMobileFilter(false) }} style={{
+                      padding: '5px 10px', borderRadius: 6, border: 'none', cursor: 'pointer',
+                      fontSize: '0.78rem', fontWeight: selectedSubject === '' ? 600 : 400,
+                      background: selectedSubject === '' ? 'var(--c-accent-bg)' : 'var(--c-surface-2)',
+                      color: selectedSubject === '' ? 'var(--c-accent)' : 'var(--c-text-2)',
+                    }}>📚 All</button>
+                    {SUBJECTS.map(s => (
+                      <button key={s.id} onClick={() => { setSelectedSubject(s.id === selectedSubject ? '' : s.id); setShowMobileFilter(false) }} style={{
+                        padding: '5px 10px', borderRadius: 6, border: 'none', cursor: 'pointer',
+                        fontSize: '0.78rem', fontWeight: selectedSubject === s.id ? 600 : 400,
+                        background: selectedSubject === s.id ? 'var(--c-accent-bg)' : 'var(--c-surface-2)',
+                        color: selectedSubject === s.id ? 'var(--c-accent)' : 'var(--c-text-2)',
+                      }}>{s.emoji} {s.label}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {['all', 'open', 'answered'].map(f => (

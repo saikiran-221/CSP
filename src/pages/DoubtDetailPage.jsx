@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
-  ArrowLeft, Send, Flag, Crown, ThumbsUp, EyeOff,
+  ArrowLeft, Send, Flag, EyeOff,
   MessageSquare, Trash2, ImagePlus, Video, X, FileText,
-  Upload, AlertCircle
+  AlertCircle
 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -206,8 +206,8 @@ function AnswerComposer({ onSubmit, isTeacher }) {
               display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px',
               borderRadius: 8, border: '1px solid', cursor: 'pointer', fontSize: '0.8rem',
               background: mediaType === 'image' ? 'var(--c-sage-bg)' : 'var(--c-surface)',
-              borderColor: mediaType === 'image' ? '#86EFAC' : 'var(--c-border)',
-              color: mediaType === 'image' ? '#15803D' : 'var(--c-text-2)',
+              borderColor: mediaType === 'image' ? 'var(--c-sage)' : 'var(--c-border)',
+              color: mediaType === 'image' ? 'var(--c-sage-2)' : 'var(--c-text-2)',
               transition: 'all 0.15s',
             }}
           >
@@ -220,9 +220,9 @@ function AnswerComposer({ onSubmit, isTeacher }) {
             style={{
               display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px',
               borderRadius: 8, border: '1px solid', cursor: 'pointer', fontSize: '0.8rem',
-              background: mediaType === 'video' ? '#F0F9FF' : 'var(--c-surface)',
-              borderColor: mediaType === 'video' ? '#BAE6FD' : 'var(--c-border)',
-              color: mediaType === 'video' ? '#0369A1' : 'var(--c-text-2)',
+              background: mediaType === 'video' ? 'var(--c-accent-bg)' : 'var(--c-surface)',
+              borderColor: mediaType === 'video' ? 'var(--c-accent-border)' : 'var(--c-border)',
+              color: mediaType === 'video' ? 'var(--c-accent)' : 'var(--c-text-2)',
               transition: 'all 0.15s',
             }}
           >
@@ -254,7 +254,7 @@ function AnswerComposer({ onSubmit, isTeacher }) {
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function DoubtDetailPage() {
   const { id } = useParams()
-  const { user, profile, isTeacher, isStudent } = useAuth()
+  const { user, profile, isTeacher } = useAuth()
   const navigate = useNavigate()
   const [doubt, setDoubt] = useState(null)
   const [answers, setAnswers] = useState([])
@@ -262,12 +262,7 @@ export default function DoubtDetailPage() {
   const [reportReason, setReportReason] = useState('')
   const [showReport, setShowReport] = useState(false)
 
-  useEffect(() => {
-    fetchDoubt()
-    fetchAnswers()
-  }, [id])
-
-  async function fetchDoubt() {
+  const fetchDoubt = useCallback(async () => {
     const { data, error } = await supabase
       .from('doubts')
       .select('*, profiles:user_id(name, role)')
@@ -275,9 +270,9 @@ export default function DoubtDetailPage() {
       .single()
     if (!error) setDoubt(data)
     setLoading(false)
-  }
+  }, [id])
 
-  async function fetchAnswers() {
+  const fetchAnswers = useCallback(async () => {
     const { data } = await supabase
       .from('answers')
       .select('*, profiles:user_id(name, role)')
@@ -286,7 +281,15 @@ export default function DoubtDetailPage() {
       .order('upvotes', { ascending: false })
       .order('created_at', { ascending: true })
     setAnswers(data || [])
-  }
+  }, [id])
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      fetchDoubt()
+      fetchAnswers()
+    }, 0)
+    return () => clearTimeout(t)
+  }, [fetchDoubt, fetchAnswers])
 
   async function uploadMedia(file, type) {
     const ext = file.name.split('.').pop()
